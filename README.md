@@ -84,7 +84,44 @@ Insert as value: `curl -H "Content-Type: application/json" --data
 After these steps you should be able to see builds of images on Docker
 hub after every "successful" commit.
 
+## Linking with Docker Cloud
+
+Docker cloud allows to
+- manage nodes AKA instances which are physically hosted on another cloud providers: AWS, Digital Ocean, etc.
+- manage stacks AKA different groups of services
+- manage services AKA deployed containers
+
+Now we need to link Docker Cloud with Amazon account - [read how to do
+it](https://docs.docker.com/docker-cloud/infrastructure/link-aws/).
+
+Then you will be able to create a node:
+
+![Docker Cloud create node](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-create-node.png)
+
+And provide a Stackfile:
+
+![Docker Cloud create stack](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-create-stack.png)
+
+You can click `Create` and deploy stack later or create and deploy it
+immidiately.
+
+If everything is OK you will see two containers running on your node.
+
+Don't forget to SSH on your `web` container with terminal and create DB for rails
+here:
+
+`rake db:create db:migrate`.
+
+![Docker Cloud service terminal](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-web-terminal.png)
+
+## Redeploy our web container when new image was pushed on Docker Cloud
+
+
+
 ## Conclusion
+
+It's the end of this very concise guide and I suppose a lot of points
+aren't covered deeply here.
 
 If you have any questions - please share them as issues.
 Thanx!
