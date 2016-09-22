@@ -40,8 +40,46 @@ We need it to dockerize our app.
 Please consider to [read](https://docs.docker.com/compose/rails/) how to dockerize sample rails app to use it in development because it's
 not part of this guide to teach you how to work with Docker.
 
+## Create automated build in Docker Hub
+
+We need to create an automated build to store our image on Doker Hub.
+Login to Docker, link your Github or Bitbucket account in setting, and
+then create automated build.
+
+![Docker Hub link account](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-link-gh-account.png)
+
+![Docker Hub create automated build](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-create-automated-build.png)
+
+Uncheck `When active, builds will happen automatically on pushes.`
+because we will control them via CI tool.
+
+![Docker Hub automated build settings](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-automated-build-settings.png)
+
+Scroll down and you will see section `Build triggers` - we need to
+activate them. After activation you will get `Trigger URL`.
+
+![Docker Hub automated build trigger](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-activate-trigger.png)
+
+
 ### Push image to Docker Hub when build succeeded
 
+To add this behaviour we need to slightly change our `cirle.yml`.
+
+```yaml
+deployment:
+  dockerhub:
+    branch: master
+    commands:
+      - $DOCKER_HUB_TRIGGER
+```
+
+As you can see here we use env variable `$DOCKER_HUB_TRIGGER`. We can
+add it on Circle CI:
+
+![CircleCI add ENV var](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/circle-ci-add-env-var.png)
+
+Insert as value: `curl -H "Content-Type: application/josn" --data
+'{"build": true}' -X POST #{TRIGGER_URL}`.
 
 ## Conlusion
 
