@@ -51,7 +51,7 @@ then create automated build.
 ![Docker Hub create automated build](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-create-automated-build.png)
 
 Uncheck `When active, builds will happen automatically on pushes.`
-because we will control them via CI tool.
+because we will control them via a CI tool.
 
 ![Docker Hub automated build settings](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-automated-build-settings.png)
 
@@ -73,13 +73,16 @@ deployment:
       - $DOCKER_HUB_TRIGGER
 ```
 
-As you can see here we use env variable `$DOCKER_HUB_TRIGGER`. We can
+As you can see here we use env variable `$DOCKER_HUB_TRIGGER`. We should
 add it on Circle CI:
 
 ![CircleCI add ENV var](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/circle-ci-add-env-var.png)
 
 Insert as value: `curl -H "Content-Type: application/josn" --data
 '{"build": true}' -X POST #{TRIGGER_URL}`.
+
+After these steps you should be able to see builds of images on Docker
+hub after every 'successful` commit.
 
 ## Conlusion
 
