@@ -84,7 +84,7 @@ Insert as value: `curl -H "Content-Type: application/json" --data
 After these steps you should be able to see builds of images on Docker
 hub after every 'successful` commit.
 
-## Conlusion
+## Conclusion
 
 If you have any questions - please share them as issues.
 Thanx!
