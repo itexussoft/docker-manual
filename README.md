@@ -43,7 +43,7 @@ not part of this guide to teach you how to work with Docker.
 ## Create automated build in Docker Hub
 
 We need to create an automated build to store our image on Doker Hub.
-Login to Docker, link your Github or Bitbucket account in setting, and
+Login to Docker Hub, link your Github or Bitbucket account in settings, and
 then create automated build.
 
 ![Docker Hub link account](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-link-gh-account.png)
@@ -82,7 +82,7 @@ Insert as value: `curl -H "Content-Type: application/json" --data
 '{"build": true}' -X POST #{TRIGGER_URL}`.
 
 After these steps you should be able to see builds of images on Docker
-hub after every 'successful` commit.
+hub after every "successful" commit.
 
 ## Conclusion
 
