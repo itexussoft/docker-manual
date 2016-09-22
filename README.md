@@ -116,7 +116,16 @@ here:
 
 ## Redeploy our web container when new image was pushed on Docker Cloud
 
+Firstly, you need to create new trigger on a service. Just provide a
+trigger name and action that should be performed: Scale or Redeploy.
 
+![Docker Cloud create trigger](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-redeploy-trigger.png)
+
+Then create a webhook for docker hub image:
+
+![Docker Hub web hook](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-web-hook.png)
+
+And that's all! Pretty simple.
 
 ## Conclusion
 
