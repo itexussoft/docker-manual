@@ -78,7 +78,7 @@ add it on Circle CI:
 
 ![CircleCI add ENV var](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/circle-ci-add-env-var.png)
 
-Insert as value: `curl -H "Content-Type: application/josn" --data
+Insert as value: `curl -H "Content-Type: application/json" --data
 '{"build": true}' -X POST #{TRIGGER_URL}`.
 
 After these steps you should be able to see builds of images on Docker
