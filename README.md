@@ -1,4 +1,4 @@
-# Continuous deployment with Docker
+# Continuous Deployment with Docker
 
 In this manual we will deploy sample rails app (backed w/ PostgreSQL) on EC2 instance using:
 - [Circle CI](https://circleci.com/) - a continuous intgration tool,
