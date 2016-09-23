@@ -1,30 +1,32 @@
-# Continuous integration with Docker
+# Continuous deployment with Docker
 
-In this manual we will deploy sample rails app (backed w/ PostgreSQL) on EC2 instance using
+In this manual we will deploy sample rails app (backed w/ PostgreSQL) on EC2 instance using:
 - [Circle CI](https://circleci.com/) - a continuous intgration tool,
 - [Docker Hub](https://hub.docker.com/) - a registry to store docker images,
-- [Docker Cloud](https://cloud.docker.com/) - a hosted service that provides a Registry with build and testing facilities for Dockerized application images.
+- [Docker Cloud](https://cloud.docker.com/) - a hosted service that provides a registry with build and testing facilities for dockerized application images.
 
-**FYI**: [App](https://github.com/nastia-shaternik/dev-docker) that we're going to deploy on pruduction env in this session.
+**FYI**: [App](https://github.com/nastia-shaternik/dev-docker) that we're going to deploy on production env.
 
 ## Set up continuos integration with Circle CI
 
-In this section we will link our app with Cicle CI - in order to see how
+In this section we will link our app with Cicle CI in order to see how
 each commit integrates into the existing app.
 
-You just need to login though your GitHub account and add a repository
+You just need to login via your GitHub account and add a repository
 you want to watch.
 For plans and prices look [here](https://circleci.com/pricing/).
 
-After that every your pushed commit will be checked via tests or via
-other measurement you've provided.
+After that every pushed commit will be checked via tests or via
+other measurements you've provided.
 
 ## Continue with Docker Hub
 
-Next, we want every good build to be stored at Docker Hub as an image.
+Next, we want every "good" build to be stored at Docker Hub as an image.
 Assume we have sample `Dockerfile` for our app:
 
 ```Dockerfile
+# Dockerfile
+
 FROM ruby:2.3.1
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 RUN mkdir /dev-docker
@@ -38,7 +40,7 @@ ADD . /dev-docker
 We need it to dockerize our app.
 
 Please consider to [read](https://docs.docker.com/compose/rails/) how to dockerize sample rails app to use it in development because it's
-not part of this guide to teach you how to work with Docker.
+not part of this guide to teach you how to work with Docker. :smiley:
 
 ## Create automated build in Docker Hub
 
@@ -61,11 +63,13 @@ activate them. After activation you will get `Trigger URL`.
 ![Docker Hub automated build trigger](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-hub-activate-trigger.png)
 
 
-### Push image to Docker Hub when build succeeded
+## Push image to Docker Hub when build succeeded
 
 To add this behaviour we need to slightly change our `cirle.yml`.
 
 ```yaml
+# circle.yml
+
 deployment:
   dockerhub:
     branch: master
@@ -81,13 +85,13 @@ add it on Circle CI:
 Insert as value: `curl -H "Content-Type: application/json" --data
 '{"build": true}' -X POST #{TRIGGER_URL}`.
 
-After these steps you should be able to see builds of images on Docker
+After these steps you should be able to see images builds on Docker
 hub after every "successful" commit.
 
 ## Linking with Docker Cloud
 
 Docker cloud allows to
-- manage nodes AKA instances which are physically hosted on another cloud providers: AWS, Digital Ocean, etc.
+- manage nodes AKA instances that are physically hosted on another cloud providers: AWS, Digital Ocean, etc.
 - manage stacks AKA different groups of services
 - manage services AKA deployed containers
 
@@ -102,22 +106,21 @@ And provide a Stackfile:
 
 ![Docker Cloud create stack](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-create-stack.png)
 
-You can click `Create` and deploy stack later or create and deploy it
-immidiately.
+You can click `Create` and deploy stack later or `Create & Deploy` it
+immediately.
 
 If everything is OK you will see two containers running on your node.
 
-Don't forget to SSH on your `web` container with terminal and create DB for rails
-here:
+Don't forget to SSH on your `web` container with terminal and create DB for rails:
 
 `rake db:create db:migrate`.
 
 ![Docker Cloud service terminal](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-web-terminal.png)
 
-## Redeploy our web container when new image was pushed on Docker Cloud
+## Redeploy web container when new image was pushed on Docker Cloud
 
 Firstly, you need to create new trigger on a service. Just provide a
-trigger name and action that should be performed: Scale or Redeploy.
+trigger name and action that should be performed: `Scale` or `Redeploy`.
 
 ![Docker Cloud create trigger](https://raw.githubusercontent.com/nastia-shaternik/docker-manual/master/images/docker-cloud-redeploy-trigger.png)
 
@@ -129,7 +132,7 @@ And that's all! Pretty simple.
 
 ## Conclusion
 
-It's the end of this very concise guide and I suppose a lot of points
+It's the end of this very concise guide, and I suppose, a lot of points
 aren't covered deeply here.
 
 If you have any questions - please share them as issues.
